@@ -20,6 +20,7 @@ export default function Header() {
         {/* PC表示：ナビゲーション（md以上で表示） */}
         <nav className="hidden md:flex space-x-6">
           <Link href="/" className="text-gray-700 hover:text-blue-600">トップ</Link>
+          <Link href="/about" className="text-gray-700 hover:text-blue-600">会社概要</Link>
           <Link href="/contact" className="text-gray-700 hover:text-blue-600">お問い合わせ</Link>
         </nav>
 
@@ -42,6 +43,9 @@ export default function Header() {
           <ul className="flex flex-col items-start p-4 space-y-2">
             <li>
               <Link href="/" className="text-gray-700 hover:text-blue-600" onClick={() => setMenuOpen(false)}>トップ</Link>
+            </li>
+            <li>
+              <Link href="/about" className="text-gray-700 hover:text-blue-600" onClick={() => setMenuOpen(false)}>会社概要</Link>
             </li>
             <li>
               <Link href="/contact" className="text-gray-700 hover:text-blue-600" onClick={() => setMenuOpen(false)}>お問い合わせ</Link>
