@@ -2,6 +2,7 @@ import type { Metadata } from "next"; // ページ全体のメタ情報を型で
 import { Geist, Geist_Mono } from "next/font/google"; // Google Fonts（Geist）の読み込み
 import "./globals.css"; // Tailwindや共通スタイルを適用
 import Header from "@/components/Header"; // ヘッダーコンポーネントの読み込み
+import Footer from "@/components/Footer"; // フッターコンポーネントの読み込み
 
 // フォントの設定（カスタムプロパティとして利用）
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <Header /> {/* ← 全ページ共通のナビゲーションバー */}
         <main className="min-h-screen">{children}</main> {/* ページ固有の内容 */}
+        <Footer /> {/* ← 全ページ共通のフッター */}
       </body>
     </html>
   );
