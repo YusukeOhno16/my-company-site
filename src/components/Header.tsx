@@ -14,7 +14,7 @@ export default function Header() {
 
         {/* 左側：ロゴまたは会社名 */}
         <div className="text-xl font-bold text-blue-700">
-          <Link href="/">MyTechCompany</Link>
+          <Link href="/">MyTechCompany Inc.</Link>
         </div>
 
         {/* PC表示：ナビゲーション（md以上で表示） */}
