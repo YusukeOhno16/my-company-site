@@ -15,7 +15,7 @@ export default function AboutPage() {
             </div>
             <div>
               <dt className="font-semibold">代表者</dt>
-              <dd>大野 雄亮</dd>
+              <dd>代表取締役</dd>
             </div>
             <div>
               <dt className="font-semibold">設立</dt>
