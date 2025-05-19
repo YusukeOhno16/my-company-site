@@ -18,13 +18,13 @@ export async function POST(request: Request) {
       secure: process.env.SMTP_SECURE === 'true',
       auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
+        pass: process.env.SMTP_PASS,
       },
     });
 
     const adminMailOptions = {
-      from: process.env.SMTP_USER,
-      to: process.env.TO_EMAIL,
+      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.SMTP_USER}>`,
+      to: process.env.MAIL_TO_ADMIN,
       subject: `[お問い合わせ] ${name}さんから`,
       text: `
 お名前: ${name}
@@ -35,9 +35,9 @@ ${message}
     };
 
     const userMailOptions = {
-      from: process.env.SMTP_USER,
+      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: `【MyTechCompany】お問い合わせありがとうございます`,
+      subject: process.env.MAIL_REPLY_SUBJECT,
       text: `
 ${name}様
 
