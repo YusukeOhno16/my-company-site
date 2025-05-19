@@ -24,13 +24,34 @@ export default function ContactForm() {
     resolver: zodResolver(contactSchema), // Zodでバリデーション
   });
 
-  const [isSent, setIsSent] = useState(false); // 送信完了表示のための状態
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+  const [error, setError] = useState("");
 
   const onSubmit = async (data: ContactFormData) => {
-    console.log("送信データ:", data);
-    // ★ここでAPIやメール送信処理を呼び出す
-    setIsSent(true);
-    reset(); // フォームを初期化
+    setIsLoading(true);
+    setError("");
+    setIsSent(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("送信に失敗しました");
+
+      setIsSent(true);
+      reset(); // フォーム初期化
+    } catch (err) {
+      console.error(err);
+      setError("送信中にエラーが発生しました。");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,9 +104,12 @@ export default function ContactForm() {
       <div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          disabled={isLoading}
+          className={`w-full text-white py-2 rounded transition ${
+            isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          送信する
+          {isLoading ? "送信中..." : "送信する"}
         </button>
       </div>
 
@@ -93,6 +117,13 @@ export default function ContactForm() {
       {isSent && (
         <p className="text-green-600 text-sm text-center">
           お問い合わせを送信しました。ありがとうございます！
+        </p>
+      )}
+      
+      {/* エラーメッセージ */}
+      {error && (
+        <p className="text-red-600 text-sm text-center">
+          {error}
         </p>
       )}
     </form>
