@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+/**
+ * お問い合わせフォームからのPOSTリクエストを処理するAPIエンドポイント
+ * フォームデータを受け取り、管理者と送信者の両方にメールを送信する
+ */
 export async function POST(request: Request) {
   try {
     const { name, email, message } = await request.json();
@@ -13,31 +17,31 @@ export async function POST(request: Request) {
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: process.env.SMTP_SECURE === 'true',
+      host: process.env.SMTP_HOST,         // SMTPサーバーのホスト名
+      port: Number(process.env.SMTP_PORT) || 587, // ポート番号（デフォルト587）
+      secure: process.env.SMTP_SECURE === 'true', // SSL/TLS設定
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER,       // SMTP認証ユーザー
+        pass: process.env.SMTP_PASS,       // SMTP認証パスワード
       },
     });
 
     const adminMailOptions = {
-      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.SMTP_USER}>`,
-      to: process.env.MAIL_TO_ADMIN,
-      subject: `[お問い合わせ] ${name}さんから`,
+      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.SMTP_USER}>`, // 送信元（表示名 + メールアドレス）
+      to: process.env.MAIL_TO_ADMIN,       // 管理者のメールアドレス
+      subject: `[お問い合わせ] ${name}さんから`, // 件名
       text: `
 お名前: ${name}
 メールアドレス: ${email}
 お問い合わせ内容:
 ${message}
-      `,
+      `, // 本文（プレーンテキスト形式）
     };
 
     const userMailOptions = {
-      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.SMTP_USER}>`,
-      to: email,
-      subject: process.env.MAIL_REPLY_SUBJECT,
+      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.SMTP_USER}>`, // 送信元（表示名 + メールアドレス）
+      to: email,                           // 送信者のメールアドレス
+      subject: process.env.MAIL_REPLY_SUBJECT, // 件名（環境変数から取得）
       text: `
 ${name}様
 
@@ -54,7 +58,7 @@ ${message}
 近日中にご連絡いたしますので、しばらくお待ちください。
 
 ※このメールは自動送信されています。返信はご遠慮ください。
-`,
+`, // 本文（プレーンテキスト形式）
     };
 
     try {
