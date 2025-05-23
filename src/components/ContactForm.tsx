@@ -7,19 +7,19 @@ import { useState } from "react";
 
 // バリデーションルールの定義（Zod）
 const contactSchema = z.object({
-  name: z.string().min(1, "お名前は必須です"),
-  email: z.string().email("有効なメールアドレスを入力してください"),
-  message: z.string().min(1, "お問い合わせ内容を入力してください"),
+  name: z.string().min(1, "お名前は必須です"), // 名前は1文字以上必須
+  email: z.string().email("有効なメールアドレスを入力してください"), // 有効なメール形式を要求
+  message: z.string().min(1, "お問い合わせ内容を入力してください"), // メッセージは1文字以上必須
 });
 
 type ContactFormData = z.infer<typeof contactSchema>; // 型定義をスキーマから自動生成
 
 export default function ContactForm() {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
+    register,      // 入力フィールドの登録
+    handleSubmit,  // フォーム送信ハンドラー
+    formState: { errors }, // バリデーションエラーの状態
+    reset,         // フォームリセット関数
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema), // Zodでバリデーション
   });
@@ -28,6 +28,7 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false); // 送信中の状態
   const [submitError, setSubmitError] = useState<string | null>(null); // エラーメッセージの状態
 
+  // バリデーション成功後に実行され、APIエンドポイントにデータを送信
   const onSubmit = async (data: ContactFormData) => {
     console.log("送信データ:", data);
     
@@ -125,14 +126,16 @@ export default function ContactForm() {
         </button>
       </div>
 
-      {/* エラーメッセージ */}
+      {/* エラーメッセージ表示セクション */}
+      {/* APIやネットワークエラー発生時にユーザーに通知 */}
       {submitError && (
         <p className="text-red-600 text-sm text-center">
           {submitError}
         </p>
       )}
 
-      {/* 送信後に表示されるメッセージ */}
+      {/* 送信成功時のメッセージ表示セクション */}
+      {/* メール送信が完了したことをユーザーに通知 */}
       {isSent && (
         <p className="text-green-600 text-sm text-center">
           お問い合わせを送信しました。ありがとうございます！
