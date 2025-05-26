@@ -10,7 +10,7 @@ export const contactSchema = z.object({
     .string()
     .trim()
     .email({ message: "有効なメールアドレスを入力してください。" })
-    .max(100, { message: "メールアドレスは100文字以内で入力してください。" }),
+    .max(254, { message: "メールアドレスは254文字以内で入力してください。" }),
   message: z
     .string()
     .trim()
