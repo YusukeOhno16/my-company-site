@@ -1,6 +1,6 @@
 import HeroSection from "@/components/HeroSection"; // Heroセクションをインポート
 // お問い合わせセクションをインポート
-import ContactSection from "@/components/ContactSection";
+import ContactForm from "@/components/ContactForm";
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
       {/* トップページにHeroセクションを表示 */}
       <HeroSection />
       {/* お問い合わせセクションを表示 */}
-      <ContactSection />
+      <ContactForm />
     </main>
   );
 }
