@@ -9,7 +9,7 @@ export default function HeroSection() {
         {/* 幅の最大値を制限して、横パディング（余白）を追加 */}
 
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          つくる力で、ビジネスを前に進める。。。
+          つくる力で、ビジネスを前に進める。。。。
         </h1>
 
         <p className="text-lg text-gray-700 mb-6">
